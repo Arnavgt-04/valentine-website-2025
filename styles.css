@@ -316,3 +316,98 @@ h2 {
     transform: scale(1.05);
     background: var(--secondary-color);
 } 
+
+/* Number Puzzle Styles - Add this to your styles.css file */
+
+.number-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    min-height: 200px;
+    position: relative;
+    margin: 40px 0;
+}
+
+.number-btn {
+    width: 100px;
+    height: 100px;
+    font-size: 3rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ff6b9d, #c44569);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: scale(0);
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+}
+
+.number-btn.show {
+    animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(-180deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.number-btn.fadeOut {
+    animation: fadeOut 0.3s ease forwards;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+.number-btn:hover:not(:disabled) {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 15px 40px rgba(255, 107, 157, 0.5);
+}
+
+.number-btn:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.number-btn.clicked {
+    animation: pulse 0.3s ease;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+/* Responsive for mobile */
+@media (max-width: 768px) {
+    .number-container {
+        gap: 20px;
+    }
+    
+    .number-btn {
+        width: 80px;
+        height: 80px;
+        font-size: 2.5rem;
+    }
+}
