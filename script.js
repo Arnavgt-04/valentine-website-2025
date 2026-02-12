@@ -116,8 +116,19 @@ function setRandomPosition(element) {
 
 // Function to show next question
 function showNextQuestion(questionNumber) {
+    // Hide all questions first
     document.querySelectorAll('.question-section').forEach(q => q.classList.add('hidden'));
-    document.getElementById(`question${questionNumber}`).classList.remove('hidden');
+    
+    if (questionNumber === 2) {
+        // Show love meter (question 2)
+        document.getElementById('question2').classList.remove('hidden');
+    } else if (questionNumber === 3) {
+        // Show number puzzle instead of going directly to question 3
+        showNumberPuzzle();
+    } else {
+        // Show the specified question
+        document.getElementById(`question${questionNumber}`).classList.remove('hidden');
+    }
 }
 
 // Function to move the "No" button when clicked
@@ -240,3 +251,66 @@ function setupMusicPlayer() {
         }
     });
 } 
+// Show the number puzzle page
+function showNumberPuzzle() {
+    document.getElementById('numberPuzzle').classList.remove('hidden');
+    currentNumberIndex = 0;
+    
+    // Clear the container
+    const container = document.querySelector('.number-container');
+    container.innerHTML = '';
+    
+    // Show first button (3)
+    setTimeout(() => {
+        createNumberButton(numberSequence[0]);
+    }, 300);
+}
+
+// Create a number button
+function createNumberButton(number) {
+    const container = document.querySelector('.number-container');
+    
+    const btn = document.createElement('button');
+    btn.className = 'number-btn';
+    btn.textContent = number;
+    btn.onclick = () => handleNumberClick(number, btn);
+    
+    container.appendChild(btn);
+    
+    // Trigger the animation
+    setTimeout(() => {
+        btn.classList.add('show');
+    }, 10);
+}
+
+// Handle number button click
+function handleNumberClick(number, btn) {
+    if (number === numberSequence[currentNumberIndex]) {
+        // Add clicked animation
+        btn.classList.add('clicked');
+        
+        setTimeout(() => {
+            btn.classList.remove('clicked');
+            
+            // Fade out current button
+            btn.classList.add('fadeOut');
+            
+            setTimeout(() => {
+                btn.remove();
+                
+                currentNumberIndex++;
+                
+                if (currentNumberIndex < numberSequence.length) {
+                    // Show next button
+                    createNumberButton(numberSequence[currentNumberIndex]);
+                } else {
+                    // All buttons clicked! Go to question 3
+                    setTimeout(() => {
+                        document.getElementById('numberPuzzle').classList.add('hidden');
+                        document.getElementById('question3').classList.remove('hidden');
+                    }, 500);
+                }
+            }, 300);
+        }, 300);
+    }
+}
