@@ -1,6 +1,10 @@
 // Initialize configuration
 const config = window.VALENTINE_CONFIG;
 
+// Number puzzle state
+let currentNumberIndex = 0;
+const numberSequence = [3, 5, 7, 9];
+
 // Validate configuration
 function validateConfig() {
     const warnings = [];
